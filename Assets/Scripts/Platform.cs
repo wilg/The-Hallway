@@ -23,11 +23,11 @@ public class Platform : MonoBehaviour {
 		}
 	}
 	
-	void Center() {
+	Vector3 Center() {
 		return transform.position;
 	}
 	
-	void Rotation() {
+	Quaternion Rotation() {
 		return transform.rotation;
 	}
 	
