@@ -8,7 +8,7 @@ public class Platform : MonoBehaviour {
 	
 	public WeightedObject[] objects;
 	
-	private int balanceDegree = 0;
+	private float balanceDegree = 0;
 	
 	private float massLeft = 0;
 	private float massRight = 0;
@@ -16,7 +16,7 @@ public class Platform : MonoBehaviour {
 	private Quaternion initialRotation;
 	
 	public Axis axisOfRotation = Axis.X; 
-	public float rotationSpeed = .01f;
+	public float rotationSpeed = .001f;
 	
 	// Use this for initialization
 	void Start () {
@@ -47,10 +47,10 @@ public class Platform : MonoBehaviour {
 		}
 		
 		if(massRight > massLeft) {
-			balanceDegree = -30;
+			balanceDegree = -20f*((massRight-massLeft)/massRight);
 		}
 		if(massRight < massLeft){
-			balanceDegree = 30;
+			balanceDegree = 20f*((massLeft-massRight)/massLeft);
 		}
 		if(massRight == massLeft) {
 			balanceDegree = 0;
