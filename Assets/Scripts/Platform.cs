@@ -13,10 +13,12 @@ public class Platform : MonoBehaviour {
 	private float massLeft = 0;
 	private float massRight = 0;
 	
+	
 	private Quaternion initialRotation;
 	
 	public Axis axisOfRotation = Axis.X; 
 	public float rotationSpeed = .001f;
+	public float massOfPlatform = 10f;
 	
 	// Use this for initialization
 	void Start () {
@@ -26,22 +28,19 @@ public class Platform : MonoBehaviour {
 	void Update () {
 		UpdateBalance();
 		transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.AngleAxis(balanceDegree,Vector3.forward), Time.time*rotationSpeed);
-		Debug.Log(massLeft + "  " + massRight);
-		Debug.Log(balanceDegree);
 	}
 	
 	private void UpdateBalance() {
 		//update mass on each side
-		massRight = 0;
-		massLeft = 0;
+		massRight = massLeft = massOfPlatform/2f;
 		foreach(WeightedObject obj in objects){
 			if(obj.IsGrounded()) {
 				float distance = DistanceFromAxisOfRotation(obj);
 				if(distance > 0){
-					massRight += obj.mass;
+					massRight += (Mathf.Abs(distance)/3)*obj.mass;
 				}
 				else {
-					massLeft += obj.mass;
+					massLeft += (Mathf.Abs(distance)/3)*obj.mass;
 				}
 			}
 		}
